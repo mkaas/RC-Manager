@@ -1,6 +1,27 @@
 body{
-	background-color: white;
-	color: black;
+	background-color: #323232;
+	color: #ffffff;
 	font-family: sans-serif;
 	font-size: 10px;
+	padding: 0px;
+	margin: 0px;
+}
+
+.tblHeader{
+	background-color: #ff8c00;
+	color: black;
+	font-family: inherit;
+	font-size: 11px;
+	font-weight: bold;
+	padding: 2px;
+	border-bottom: 2px solid White;
+}
+
+.tblContent{
+	background-color: #1a1a1a;
+	color: #7fff00;
+	font-family: sans-serif;
+	font-size: 11px;
+	padding: 2px;
+	border-bottom: 1px solid #000;
 }
