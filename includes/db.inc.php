@@ -1,9 +1,9 @@
 <?php
 
   $dbhost = 'localhost';
-  $dbbase = '';
+  $dbbase = 'rcman';
   
-  $dbuser = '';
+  $dbuser = 'root';
   $dbpass = '';
   
   mysql_connect($dbhost,$dbuser,$dbpass) or die(mysql_error());
