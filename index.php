@@ -4,7 +4,7 @@
 	
 	htmlHeader();
 	
-	
+	crBanner();
 	
 	htmlFooter();
 ?>
