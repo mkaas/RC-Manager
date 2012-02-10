@@ -1,6 +1,10 @@
-Project: RC-Manager
-Author: Mikkel Kaas
-Date: 10.02.2012
+Project: 		RC-Manager
+Author: 		Mikkel Kaas
+Date: 			10.02.2012
+Current Version: 	1.0a
 
 Description:
 	RC-Manager is a management application in where you can manage your RC Planes/Helicopters/Cars/Etc.
+
+Version history:
+	1.0a	-	Development version.
