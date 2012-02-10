@@ -25,3 +25,13 @@ body{
 	padding: 2px;
 	border-bottom: 1px solid #000;
 }
+
+.banner{
+	background-color: #ff8c00;
+	color: black;
+	padding: 20px;
+	font-family: inherit;
+	font-size: 42px;
+	border: 5px double black;
+	text-align: center;
+}
