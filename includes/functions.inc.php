@@ -16,14 +16,12 @@
 						<link rel="stylesheet" type="text/css" href="css/'.$theme.'.css" />
 					</head>
 					<body>
-						<center>
 			';
 		}
 	}
 	
 	function htmlFooter(){
 		print '
-					</center>
 				</body>
 			</html>
 		';
@@ -38,7 +36,7 @@
 			$revision = $arAPP['set_revision'];
 		}
 		print '
-			<table border="0" cellspacing="0" cellpadding="0">
+			<table border="0" cellspacing="0" cellpadding="0" class="banner" style="width:100%">
 				<tr>
 					<td class="banner">'.$title.' '.$version.''.$revision.'</td>
 				</tr>
