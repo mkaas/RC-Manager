@@ -1,6 +1,14 @@
 <?php
 
-	function htmlHeader($title=null,$version=null,$revision=null,$theme=null){
+	function htmlHeader(){
+		include_once('includes/db.inc.php');
+		$appSQL=mysql_query("SELECT * FROM app_setup WHERE set_active='true'") or die(mysql_error());
+		while($arAPP=mysql_fetch_array($appSQL)){
+			$title = $arAPP['set_title'];
+			$version = $arAPP['set_version'];
+			$revision = $arAPP['set_revision'];
+			$theme = $arAPP['set_theme'];
+		}
 		print '
 			<html>
 				<head>
