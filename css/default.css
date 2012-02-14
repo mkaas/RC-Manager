@@ -53,3 +53,12 @@ body{
 	padding: 2px;
 	text-align: Left;
 }
+
+.menu-bg{
+	background-color: #1a1a1a;
+	color: white;
+	font-family: inherit;
+	font-size: 11px;
+	padding: 2px;
+	text-align: Left;
+}

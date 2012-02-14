@@ -47,7 +47,7 @@
 	function crMenu(){
 		include_once('includes/db.inc.php');
 		
-		print '<table border="0" cellspacing="0" cellpadding="0"><tr>';
+		print '<table border="0" cellspacing="0" cellpadding="0" class="menu-bg" style="width:100%"><tr>';
 		
 		$mnuSQL=mysql_query("SELECT * FROM rc_menu WHERE mnu_active='true' ORDER BY mnu_order") or die(mysql_error());
 		while($arMNU=mysql_fetch_array($mnuSQL)){
