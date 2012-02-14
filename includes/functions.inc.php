@@ -54,7 +54,7 @@
 			$title = $arMNU['mnu_title'];
 			$link = $arMNU['mnu_link'];
 			
-			print '<td class="menu"><a href="'.$link.'">'.$title.'</a></td>';
+			print '<td class="menu" style="width:120px"><a href="'.$link.'">'.$title.'</a></td>';
 		}
 		print '</tr></table>';
 	}
