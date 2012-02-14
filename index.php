@@ -5,6 +5,7 @@
 	htmlHeader();
 	
 	crBanner();
+	crMenu();
 	
 	htmlFooter();
 ?>

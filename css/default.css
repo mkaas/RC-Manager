@@ -19,7 +19,7 @@ body{
 
 .tblContent{
 	background-color: #1a1a1a;
-	color: #7fff00;
+	color: White;
 	font-family: sans-serif;
 	font-size: 11px;
 	padding: 2px;
@@ -51,5 +51,5 @@ body{
 	font-family: inherit;
 	font-size: 11px;
 	padding: 2px;
-	text-align: right;
+	text-align: Left;
 }

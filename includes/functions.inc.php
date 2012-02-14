@@ -44,4 +44,19 @@
 		';
 	}
 	
+	function crMenu(){
+		include_once('includes/db.inc.php');
+		
+		print '<table border="0" cellspacing="0" cellpadding="0"><tr>';
+		
+		$mnuSQL=mysql_query("SELECT * FROM rc_menu WHERE mnu_active='true' ORDER BY mnu_order") or die(mysql_error());
+		while($arMNU=mysql_fetch_array($mnuSQL)){
+			$title = $arMNU['mnu_title'];
+			$link = $arMNU['mnu_link'];
+			
+			print '<td class="menu"><a href="'.$link.'">'.$title.'</a></td>';
+		}
+		print '</tr></table>';
+	}
+	
 ?>
