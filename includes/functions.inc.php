@@ -38,7 +38,7 @@
 		print '
 			<table border="0" cellspacing="0" cellpadding="0" class="banner" style="width:100%">
 				<tr>
-					<td class="banner">'.$title.' '.$version.''.$revision.'</td>
+					<td class="banner-bg">'.$title.' '.$version.''.$revision.'</td>
 				</tr>
 			</table>
 		';

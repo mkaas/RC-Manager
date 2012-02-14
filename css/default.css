@@ -36,6 +36,15 @@ body{
 	border-bottom: 2px solid white;
 }
 
+.banner-bg{
+	background-color: #ff8c00;
+	color: black;
+	padding: 10px;
+	font-family: inherit;
+	font-size: 24px;
+	text-align: Left;
+}
+
 .menu{
 	background-color: #1a1a1a;
 	color: white;
