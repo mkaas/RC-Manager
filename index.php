@@ -7,6 +7,7 @@
 	
 	crBanner();
 	crMenu('index');
+	br('2');
 	crLoginFrm();
 	
 	htmlFooter();
