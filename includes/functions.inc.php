@@ -72,4 +72,30 @@
 		}
 	}
 	
+	function crLoginFrm(){
+		print '
+			<form method="post" action="chkLogin.php">
+				<table border="1" cellspacing="0" cellpadding="0">
+					<tr>
+						<td class="" style="width:300px">Login</td>
+					</tr>
+				</table>
+				<table border="1" cellspacing="0" cellpadding="0">
+					<tr>
+						<td class="" style="width:100px">Username:</td>
+						<td class="" style="width:200px"><input type="text" name="username" class="" style="width:200px" /></td>
+					</tr>
+					<tr>
+						<td class="" style="width:100px">Password:</td>
+						<td class="" style="width:200px"><input type="password" name="password" class="" style="width:200px" /></td>
+					</tr>
+					<tr>
+						<td class="" style="width:100px">&nbsp;</td>
+						<td class="" style="width:200px"><input type="submit" value="Validate" class="" style="width:200px" /></td>
+					</tr>
+				</table>
+			</form>
+		';
+	}
+	
 ?>
