@@ -45,16 +45,10 @@
 	}
 	
 	function crMenu($type){
-		switch($type){
+		switch($type){ /* Differencierer mellem om menu-punkter skal vises eller ej. */
 			case 'index':
 				include_once('includes/db.inc.php');
 				print '<table border="0" cellspacing="0" cellpadding="0" class="menu-bg" style="width:100%"><tr><td><table border="0" cellspacing="0" cellpadding="0" class="menu-bg"><tr>';
-				/*$mnuSQL=mysql_query("SELECT * FROM rc_menu WHERE mnu_active='true' ORDER BY mnu_order") or die(mysql_error());
-				while($arMNU=mysql_fetch_array($mnuSQL)){
-					$title = $arMNU['mnu_title'];
-					$link = $arMNU['mnu_link'];
-					print '<td class="menu"><a href="'.$link.'">'.$title.'&nbsp;&nbsp;&nbsp;</a></td>';
-				}*/
 				print '<td class="menu">&nbsp;</td>';
 				print '</tr></table></td></tr></table>';
 				break;
