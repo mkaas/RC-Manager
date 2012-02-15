@@ -115,7 +115,7 @@
 		include_once('includes/db.inc.php');
 		$chkSQL = mysql_query("SELECT * FROM rc_users WHERE usr_username='' AND usr_password='' AND usr_active='true'") or die(mysql_error());
 		$num = mysql_num_rows($chkSQL);
-		if ($num != 1){
+		if ($num != '1'){
 			chPage('index.php');
 		} else {
 			chPage('main.php');
