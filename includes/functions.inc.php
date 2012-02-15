@@ -100,4 +100,14 @@
 		}
 	}
 	
+	function crUser($username,$password,$email){
+		/* Semi-Automatic way to create new users. */
+		$passwd = md5($password);
+		$mail = base64_encode($email);
+		echo ''.$username.' | '.$passwd.' | '.$mail.'';
+	}
+	
+	function chkLogin($username,$password){
+		
+	}
 ?>
