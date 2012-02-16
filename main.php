@@ -8,11 +8,9 @@
 	htmlHeader();
 	
 	crBanner();
-	crMenu($_SESSION['usermenu']);
+	crMenu($_SESSION['userlevel']);
 	br('2');
-	echo $_SESSION['username'];
-	echo ' | '.$_SESSION['userlevel'];
-	echo ' | '.$_SESSION['usermenu'];
+	
 	
 	htmlFooter();
 ?>

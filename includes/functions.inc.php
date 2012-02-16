@@ -141,13 +141,6 @@
 		$lvlSQL=mysql_query("SELECT * FROM rc_users WHERE usr_username='".$username."' AND usr_active='true' LIMIT 1");
 		while($arLVL=mysql_fetch_array($lvlSQL)){
 			$_SESSION['userlevel'] = $arLVL['usr_userlevel'];
-			if($_SESSION['userlevel']>='1000'){
-				$_SESSION['usermenu']='normal';
-			} elseif ($_SESSION['userlevel']<='999') {
-				$_SESSION['usermenu']='root';
-			} else {
-				$_SESSION['usermenu']='index';
-			}
 		}
 	}
 	
