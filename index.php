@@ -8,8 +8,7 @@
 	crBanner();
 	crMenu('index');
 	br('2');
-	crLoginFrm(); /* Create a SSH2 based login here */
-	//chPage('main.php');
+	crLoginFrm();
 	
 	htmlFooter();
 ?>

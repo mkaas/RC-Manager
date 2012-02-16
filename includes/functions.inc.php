@@ -128,7 +128,6 @@
 		include_once('includes/db.inc.php');echo $username;echo '|' .md5($password);
 		$chkSQL = mysql_query("SELECT * FROM rc_users WHERE usr_username='".$username."' AND usr_password='".md5($password)."' AND usr_active='true' LIMIT 1") or die(mysql_error());
 		$num = mysql_num_rows($chkSQL) or die(mysql_error());
-		echo '|||'.$num;
 		if ($num != '1'){
 			chPage('index.php');
 		} else {
@@ -142,10 +141,10 @@
 		$lvlSQL=mysql_query("SELECT * FROM rc_users WHERE usr_username='".$username."' AND usr_active='true' LIMIT 1");
 		while($arLVL=mysql_fetch_array($lvlSQL)){
 			$_SESSION['userlevel'] = $arLVL['usr_userlevel'];
-			if($_SESSION['userlevel']>=1000){
+			if($_SESSION['userlevel']>='1000'){
 				$_SESSION['usermenu']='normal';
-			} elseif ($_SESSION['userlevel']<=999) {
-				$_SESSION['usermenu']='admin';
+			} elseif ($_SESSION['userlevel']<='999') {
+				$_SESSION['usermenu']='root';
 			} else {
 				$_SESSION['usermenu']='index';
 			}
