@@ -125,10 +125,11 @@
 	}
 	
 	function chkLogin($username,$password){
-		include_once('includes/db.inc.php');echo $username;echo '|' .md5($password);
+		include_once('includes/db.inc.php');
 		$chkSQL = mysql_query("SELECT * FROM rc_users WHERE usr_username='".$username."' AND usr_password='".md5($password)."' AND usr_active='true' LIMIT 1") or die(mysql_error());
 		$num = mysql_num_rows($chkSQL) or die(mysql_error());
 		if ($num != '1'){
+			session_destroy();
 			chPage('index.php');
 		} else {
 			$_SESSION['user_ok'] = '1';
