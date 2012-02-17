@@ -155,37 +155,138 @@
 	function getUnits(){
 		include_once('includes/db.inc.php');
 		print '
+			<p>Vehicles</p>
 			<table border="0" cellspacing="0" cellpadding="0" class="tblspace">
 				<tr>
-					<td style="width:150px" class="tblHeader">&nbsp;</td>
 					<td style="width:120px" class="tblHeader">Power</td>
 					<td style="width:120px" class="tblHeader">Type</td>
 					<td style="width:120px" class="tblHeader">Company</td>
 					<td style="width:120px" class="tblHeader">Model</td>
+					<td style="width:320px" class="tblHeader">Description</td>
 				</tr>
 		';
 		$untSQL=mysql_query("SELECT * FROM rc_units WHERE unt_user='".$_SESSION['username']."' AND unt_active='true'") or die(mysql_error());
 		while($arUNT=mysql_fetch_array($untSQL)){
+			$unit_id=$arUNT['unt_id'];
 			$unit_type=$arUNT['unt_type'];
 			$unit_company=$arUNT['unt_company'];
 			$unit_model=$arUNT['unt_model'];
 			$unit_powered=$arUNT['unt_powered'];
 			$unit_picture=$arUNT['unt_picture'];
+			$unit_description=$arUNT['unt_description'];
 			
 			if($unit_picture==''){
 				$unit_picture='pics/nophoto.png';
 			}
 			
+			if(strlen($unit_description) >= 60){
+				$ud = str_split($unit_description, '60');
+				$unit_description = $ud[0] . '...';
+			}
+			
 			print '
 				<tr>
-					<td class="tblContent"><img src="pics/'.$unit_picture.'" alt="" width="128" height="128" /></td>
 					<td class="tblContent">'.$unit_powered.'</td>
 					<td class="tblContent">'.$unit_type.'</td>
 					<td class="tblContent">'.$unit_company.'</td>
-					<td class="tblContent">'.$unit_model.'</td>
+					<td class="tblContent"><form action="unit_detail.php" method="POST"><input type="hidden" name="unit_id" value="'.$unit_id.'" /><input class="input" type="submit" value="'.$unit_model.'" /></form></td>
+					<td class="tblContent">'.$unit_description.'</td>
 				</tr>
 			';
 		}
 		print '</table>';
+	}
+	
+	function getUnitDetail($unit_id){
+		include_once('includes/db.inc.php');
+		print '
+			<p>Details</p>
+			<table border="0" cellspacing="0" cellpadding="0" class="tblspace">
+				<tr>
+					<td style="width:270px" class="tblHeader">&nbsp;</td>
+					<td style="width:120px" class="tblHeader">Power</td>
+					<td style="width:120px" class="tblHeader">Type</td>
+					<td style="width:120px" class="tblHeader">Company</td>
+					<td style="width:120px" class="tblHeader">Model</td>
+					<td style="width:320px" class="tblHeader">Description</td>
+				</tr>
+		';
+		$untSQL=mysql_query("SELECT * FROM rc_units WHERE unt_user='".$_SESSION['username']."' AND unt_active='true' AND unt_id='".$unit_id."'") or die(mysql_error());
+		while($arUNT=mysql_fetch_array($untSQL)){
+			$unit_id=$arUNT['unt_id'];
+			$unit_type=$arUNT['unt_type'];
+			$unit_company=$arUNT['unt_company'];
+			$unit_model=$arUNT['unt_model'];
+			$unit_powered=$arUNT['unt_powered'];
+			$unit_picture=$arUNT['unt_picture'];
+			$unit_description=$arUNT['unt_description'];
+			
+			if($unit_picture==''){
+				$unit_picture='pics/nophoto.png';
+			}
+			
+			if(strlen($unit_description) >= 60){
+				$ud = str_split($unit_description, '60');
+				$unit_description = $ud[0] . '<br />' . $ud[1] . '<br />' . $ud[2] . '<br />' . $ud[3] . '<br />' . $ud[4] . '<br />' . $ud[5] . '<br />' . $ud[6] . '<br />' . $ud[7] . '<br />' . $ud[8] . '<br />' . $ud[9] . '<br />' . $ud[10];
+			}
+			
+			print '
+				<tr>
+					<td class="tblContent"><img src="pics/'.$unit_picture.'" alt="" width="256px" height="256px" /></td>
+					<td class="tblContent">'.$unit_powered.'</td>
+					<td class="tblContent">'.$unit_type.'</td>
+					<td class="tblContent">'.$unit_company.'</td>
+					<td class="tblContent">'.$unit_model.'</td>
+					<td class="tblContent">'.$unit_description.'</td>
+				</tr>
+			';
+		}
+		print '</table>';
+	}
+	
+	function getLogbook($type,$unit_id,$username){
+		switch($type){
+			case 'unit':
+				include_once('includes/db.inc.php');
+				print '<p>Logbook</p><table border="0" cellspacing="0" cellpadding="0" class="tblspace">';
+				print '
+					<tr>
+						<td style="width:120px" class="tblHeader">Date & Time</td>
+						<td style="width:120px" class="tblHeader">Location</td>
+						<td style="width:120px" class="tblHeader">Weather</td>
+						<td style="width:595px" class="tblHeader">Description</td>
+						<td style="width:120px" class="tblHeader">Run Length</td>
+					</tr>
+				';
+				$logSQL=mysql_query("SELECT * FROM rc_units_logbook WHERE ulb_unit_id='".$unit_id."' AND ulb_user='".$username."' AND ulb_active='true'") or die(mysql_query());
+				while($arLOG=mysql_fetch_array($logSQL)){
+					$date = $arLOG['ulb_date'];
+					$time = $arLOG['ulb_time'];
+					$location = $arLOG['ulb_location'];
+					$weather = $arLOG['ulb_weather'];
+					$description = $arLOG['ulb_description'];
+					$length = $arLOG['ulb_length'];
+					
+					print '
+						<tr>
+							<td class="tblContent">'.$date.' - '.$time.'</td>
+							<td class="tblContent">'.$location.'</td>
+							<td class="tblContent">'.$weather.'</td>
+							<td class="tblContent">'.$description.'</td>
+							<td class="tblContent">'.$length.' min.</td>
+						</tr>
+					';
+				}
+				print '</table>';
+				break;
+			case 'battery':
+				
+				break;
+			case 'transmitter':
+				
+				break;
+			default:
+				break;
+		}
 	}
 ?>
