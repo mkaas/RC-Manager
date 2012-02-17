@@ -179,8 +179,8 @@
 				$unit_picture='pics/nophoto.png';
 			}
 			
-			if(strlen($unit_description) >= 60){
-				$ud = str_split($unit_description, '60');
+			if(strlen($unit_description) >= 3){
+				$ud = str_split($unit_description, '3');
 				$unit_description = $ud[0] . '...';
 			}
 			
@@ -225,9 +225,17 @@
 				$unit_picture='pics/nophoto.png';
 			}
 			
-			if(strlen($unit_description) >= 60){
+			/*if(strlen($unit_description) >= 60){
 				$ud = str_split($unit_description, '60');
 				$unit_description = $ud[0] . '<br />' . $ud[1] . '<br />' . $ud[2] . '<br />' . $ud[3] . '<br />' . $ud[4] . '<br />' . $ud[5] . '<br />' . $ud[6] . '<br />' . $ud[7] . '<br />' . $ud[8] . '<br />' . $ud[9] . '<br />' . $ud[10];
+			}*/
+			
+			if(strlen($unit_description) >= 60){
+				$ud = explode(' ', $unit_description);
+				for($i=0;$i<=count($ud);$i++){
+					if($i=10){$ud='<br />';}
+					$unit_description = $unit_description . ' ' . $ud;
+				}
 			}
 			
 			print '
@@ -237,7 +245,7 @@
 					<td class="tblContent">'.$unit_type.'</td>
 					<td class="tblContent">'.$unit_company.'</td>
 					<td class="tblContent">'.$unit_model.'</td>
-					<td class="tblContent">'.$unit_description.'</td>
+					<td class="tblContent" style="width:320px">'.$unit_description.'</td>
 				</tr>
 			';
 		}
@@ -267,12 +275,20 @@
 					$description = $arLOG['ulb_description'];
 					$length = $arLOG['ulb_length'];
 					
+					if(strlen($description) >= 60){
+						$ud = explode(' ', $description);
+						for($i=0;$i<=count($ud);$i++){
+							if($i=10){$ud='<br />';}
+							$description = $description . ' ' . $ud;
+						}
+					}
+					
 					print '
 						<tr>
 							<td class="tblContent">'.$date.' - '.$time.'</td>
 							<td class="tblContent">'.$location.'</td>
 							<td class="tblContent">'.$weather.'</td>
-							<td class="tblContent">'.$description.'</td>
+							<td class="tblContent" style="width:595px">'.$description.'</td>
 							<td class="tblContent">'.$length.' min.</td>
 						</tr>
 					';
