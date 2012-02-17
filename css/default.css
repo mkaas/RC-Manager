@@ -16,6 +16,10 @@ body{
 	padding: 2px;
 }
 
+.tblspace{
+	margin-left: 50px;
+}
+
 .tblHeader2{
 	background-color: #0e0e0e;
 	color: white;
@@ -32,6 +36,8 @@ body{
 	font-size: 11px;
 	padding: 2px;
 	border-bottom: 1px solid #000;
+	text-align: left;
+	vertical-align: top;
 }
 
 .banner{

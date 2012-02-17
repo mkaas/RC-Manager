@@ -150,4 +150,42 @@
 			chPage('index.php');
 		}
 	}
+	
+	/* --- CONTENT --- */
+	function getUnits(){
+		include_once('includes/db.inc.php');
+		print '
+			<table border="0" cellspacing="0" cellpadding="0" class="tblspace">
+				<tr>
+					<td style="width:150px" class="tblHeader">&nbsp;</td>
+					<td style="width:120px" class="tblHeader">Power</td>
+					<td style="width:120px" class="tblHeader">Type</td>
+					<td style="width:120px" class="tblHeader">Company</td>
+					<td style="width:120px" class="tblHeader">Model</td>
+				</tr>
+		';
+		$untSQL=mysql_query("SELECT * FROM rc_units WHERE unt_user='".$_SESSION['username']."' AND unt_active='true'") or die(mysql_error());
+		while($arUNT=mysql_fetch_array($untSQL)){
+			$unit_type=$arUNT['unt_type'];
+			$unit_company=$arUNT['unt_company'];
+			$unit_model=$arUNT['unt_model'];
+			$unit_powered=$arUNT['unt_powered'];
+			$unit_picture=$arUNT['unt_picture'];
+			
+			if($unit_picture==''){
+				$unit_picture='pics/nophoto.png';
+			}
+			
+			print '
+				<tr>
+					<td class="tblContent"><img src="pics/'.$unit_picture.'" alt="" width="128" height="128" /></td>
+					<td class="tblContent">'.$unit_powered.'</td>
+					<td class="tblContent">'.$unit_type.'</td>
+					<td class="tblContent">'.$unit_company.'</td>
+					<td class="tblContent">'.$unit_model.'</td>
+				</tr>
+			';
+		}
+		print '</table>';
+	}
 ?>
