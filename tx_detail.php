@@ -10,8 +10,9 @@
 	crBanner();
 	crMenu($_SESSION['userlevel']);
 	br('2');
-	getTx();
-	
+	getTxDetail($_POST['tx_id']);
+	br(1);
+	getLogbook('transmitter',$_POST['tx_id'],$_SESSION['username']);
 	
 	htmlFooter();
 ?>

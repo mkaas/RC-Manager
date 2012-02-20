@@ -256,7 +256,7 @@
 		switch($type){
 			case 'unit':
 				include_once('includes/db.inc.php');
-				print '<p>Logbook</p><table border="0" cellspacing="0" cellpadding="0" class="tblspace">';
+				print '<p><a href="add_log.php"><img src="pics/add.png" alt="" width="10px" height="10px" /></a> <a href="edit_log.php"><img src="pics/edit.png" alt="" width="10px" height="10px" /></a> Logbook</p><table border="0" cellspacing="0" cellpadding="0" class="tblspace">';
 				print '
 					<tr>
 						<td style="width:120px" class="tblHeader">Date & Time</td>
@@ -296,13 +296,191 @@
 				print '</table>';
 				break;
 			case 'battery':
-				
+				include_once('includes/db.inc.php');
+				print '<p><a href="add_log.php"><img src="pics/add.png" alt="" width="10px" height="10px" /></a> <a href="edit_log.php"><img src="pics/edit.png" alt="" width="10px" height="10px" /></a> Logbook</p><table border="0" cellspacing="0" cellpadding="0" class="tblspace">';
+				print '
+					<tr>
+						<td style="width:120px" class="tblHeader">Date & Time</td>
+						<td style="width:120px" class="tblHeader">Location</td>
+						<td style="width:120px" class="tblHeader">Weather</td>
+						<td style="width:595px" class="tblHeader">Description</td>
+						<td style="width:120px" class="tblHeader">Run Length</td>
+					</tr>
+				';
+				$logSQL=mysql_query("SELECT * FROM rc_battery_logbook WHERE blb_unit_id='".$unit_id."' AND blb_user='".$username."' AND blb_active='true'") or die(mysql_query());
+				while($arLOG=mysql_fetch_array($logSQL)){
+					$date = $arLOG['blb_date'];
+					$time = $arLOG['blb_time'];
+					$location = $arLOG['blb_location'];
+					$weather = $arLOG['blb_weather'];
+					$description = $arLOG['blb_description'];
+					$length = $arLOG['blb_length'];
+					
+					if(strlen($description) >= 60){
+						$ud = explode(' ', $description);
+						for($i=0;$i<=count($ud);$i++){
+							if($i=10){$ud='<br />';}
+							$description = $description . ' ' . $ud;
+						}
+					}
+					
+					print '
+						<tr>
+							<td class="tblContent">'.$date.' - '.$time.'</td>
+							<td class="tblContent">'.$location.'</td>
+							<td class="tblContent">'.$weather.'</td>
+							<td class="tblContent" style="width:595px">'.$description.'</td>
+							<td class="tblContent">'.$length.' min.</td>
+						</tr>
+					';
+				}
+				print '</table>';
 				break;
 			case 'transmitter':
-				
+				include_once('includes/db.inc.php');
+				print '<p><a href="add_log.php"><img src="pics/add.png" alt="" width="10px" height="10px" /></a> <a href="edit_log.php"><img src="pics/edit.png" alt="" width="10px" height="10px" /></a> Logbook</p><table border="0" cellspacing="0" cellpadding="0" class="tblspace">';
+				print '
+					<tr>
+						<td style="width:120px" class="tblHeader">Date & Time</td>
+						<td style="width:120px" class="tblHeader">Location</td>
+						<td style="width:120px" class="tblHeader">Weather</td>
+						<td style="width:595px" class="tblHeader">Description</td>
+						<td style="width:120px" class="tblHeader">Run Length</td>
+					</tr>
+				';
+				$logSQL=mysql_query("SELECT * FROM rc_tx_logbook WHERE tlb_unit_id='".$unit_id."' AND tlb_user='".$username."' AND tlb_active='true'") or die(mysql_query());
+				while($arLOG=mysql_fetch_array($logSQL)){
+					$date = $arLOG['tlb_date'];
+					$time = $arLOG['tlb_time'];
+					$location = $arLOG['tlb_location'];
+					$weather = $arLOG['tlb_weather'];
+					$description = $arLOG['tlb_description'];
+					$length = $arLOG['tlb_length'];
+					
+					if(strlen($description) >= 60){
+						$ud = explode(' ', $description);
+						for($i=0;$i<=count($ud);$i++){
+							if($i=10){$ud='<br />';}
+							$description = $description . ' ' . $ud;
+						}
+					}
+					
+					print '
+						<tr>
+							<td class="tblContent">'.$date.' - '.$time.'</td>
+							<td class="tblContent">'.$location.'</td>
+							<td class="tblContent">'.$weather.'</td>
+							<td class="tblContent" style="width:595px">'.$description.'</td>
+							<td class="tblContent">'.$length.' min.</td>
+						</tr>
+					';
+				}
+				print '</table>';
 				break;
 			default:
 				break;
 		}
+	}
+	
+	/* Transmitter */
+	function getTx(){
+		include_once('includes/db.inc.php');
+		print '
+			<p>Transmitters</p>
+			<table border="0" cellspacing="0" cellpadding="0" class="tblspace">
+				<tr>
+					<td style="width:120px" class="tblHeader">Type</td>
+					<td style="width:120px" class="tblHeader">Company</td>
+					<td style="width:120px" class="tblHeader">Model</td>
+					<td style="width:120px" class="tblHeader">Power</td>
+					<td style="width:320px" class="tblHeader">Description</td>
+				</tr>
+		';
+		$txSQL=mysql_query("SELECT * FROM rc_transmitters WHERE tx_user='".$_SESSION['username']."' AND tx_active='true'") or die(mysql_error());
+		while($arTX=mysql_fetch_array($txSQL)){
+			$tx_id=$arTX['tx_id'];
+			$tx_type=$arTX['tx_type'];
+			$tx_company=$arTX['tx_company'];
+			$tx_model=$arTX['tx_model'];
+			$tx_powered=$arTX['tx_powered'];
+			$tx_picture=$arTX['tx_picture'];
+			$tx_description=$arTX['tx_description'];
+			
+			if($tx_picture==''){
+				$tx_picture='pics/nophoto.png';
+			}
+			
+			if(strlen($tx_description) >= 3){
+				$ud = str_split($tx_description, '3');
+				$tx_description = $ud[0] . '...';
+			}
+			
+			print '
+				<tr>
+					
+					<td class="tblContent">'.$tx_type.'</td>
+					<td class="tblContent">'.$tx_company.'</td>
+					<td class="tblContent"><form action="tx_detail.php" method="POST"><input type="hidden" name="tx_id" value="'.$tx_id.'" /><input class="input" type="submit" value="'.$tx_model.'" /></form></td>
+					<td class="tblContent">'.$tx_powered.'</td>
+					<td class="tblContent">'.$tx_description.'</td>
+				</tr>
+			';
+		}
+		print '</table>';
+	}
+	
+	function getTxDetail($tx_id){
+		include_once('includes/db.inc.php');
+		print '
+			<p>Details</p>
+			<table border="0" cellspacing="0" cellpadding="0" class="tblspace">
+				<tr>
+					<td style="width:270px" class="tblHeader">&nbsp;</td>
+					<td style="width:120px" class="tblHeader">Type</td>
+					<td style="width:120px" class="tblHeader">Company</td>
+					<td style="width:120px" class="tblHeader">Model</td>
+					<td style="width:120px" class="tblHeader">Power</td>
+					<td style="width:320px" class="tblHeader">Description</td>
+				</tr>
+		';
+		$txSQL=mysql_query("SELECT * FROM rc_transmitters WHERE tx_user='".$_SESSION['username']."' AND tx_active='true' AND tx_id='".$tx_id."'") or die(mysql_error());
+		while($arTX=mysql_fetch_array($txSQL)){
+			$tx_id=$arTX['tx_id'];
+			$tx_type=$arTX['tx_type'];
+			$tx_company=$arTX['tx_company'];
+			$tx_model=$arTX['tx_model'];
+			$tx_powered=$arTX['tx_powered'];
+			$tx_picture=$arTX['tx_picture'];
+			$tx_description=$arTX['tx_description'];
+			
+			if($tx_picture==''){
+				$tx_picture='pics/nophoto.png';
+			}
+			
+			/*if(strlen($unit_description) >= 60){
+				$ud = str_split($unit_description, '60');
+				$unit_description = $ud[0] . '<br />' . $ud[1] . '<br />' . $ud[2] . '<br />' . $ud[3] . '<br />' . $ud[4] . '<br />' . $ud[5] . '<br />' . $ud[6] . '<br />' . $ud[7] . '<br />' . $ud[8] . '<br />' . $ud[9] . '<br />' . $ud[10];
+			}*/
+			
+			if(strlen($tx_description) >= 60){
+				$ud = explode(' ', $tx_description);
+				for($i=0;$i<=count($ud);$i++){
+					if($i=10){$ud='<br />';}
+					$tx_description = $tx_description . ' ' . $ud;
+				}
+			}
+			
+			print '
+				<tr>
+					<td class="tblContent"><img src="pics/'.$tx_picture.'" alt="" width="256px" height="256px" /></td>
+					<td class="tblContent">'.$tx_type.'</td>
+					<td class="tblContent">'.$tx_company.'</td>
+					<td class="tblContent">'.$tx_model.'</td>
+					<td class="tblContent">'.$tx_powered.'</td>
+					<td class="tblContent" style="width:320px">'.$tx_description.'</td>
+				</tr>
+			';
+		}
+		print '</table>';
 	}
 ?>
