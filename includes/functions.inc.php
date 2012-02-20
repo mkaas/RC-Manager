@@ -151,7 +151,7 @@
 		}
 	}
 	
-	/* --- CONTENT --- */
+	/* --- VEHICLES --- */
 	function getUnits(){
 		include_once('includes/db.inc.php');
 		print '
@@ -200,7 +200,7 @@
 	function getUnitDetail($unit_id){
 		include_once('includes/db.inc.php');
 		print '
-			<p>Details</p>
+			<p><a href="edit_unit_detail.php"><img src="pics/edit.png" alt="" width="10px" height="10px" /></a> Details</p>
 			<table border="0" cellspacing="0" cellpadding="0" class="tblspace">
 				<tr>
 					<td style="width:270px" class="tblHeader">&nbsp;</td>
@@ -252,6 +252,58 @@
 		print '</table>';
 	}
 	
+	function frmEditUnitDetail($unit_id){
+		include_once('includes/db.inc.php');
+		print '<p>Edit Unit Details</p>';
+		$eudSQL=mysql_query("SELECT * FROM rc_units WHERE unt_user='".$_SESSION['username']."' AND unt_active='true' AND unt_id='".$unit_id."'") or die(mysql_error());
+		while($arEUD=mysql_fetch_array($eudSQL)){
+			$unit_id=$arEUD['unt_id'];
+			$unit_type=$arEUD['unt_type'];
+			$unit_company=$arEUD['unt_company'];
+			$unit_model=$arEUD['unt_model'];
+			$unit_power=$arEUD['unt_powered'];
+			$unit_picture=$arEUD['unt_picture'];
+			$unit_description=$arEUD['unt_description'];
+			
+			/* build edit form */
+			print '
+				<form action="do_edit.php" method="POST">
+					<table border="0" cellspacing="0" cellpadding="0" class="tblSpace">
+						<tr>
+							<td class="tblHeader" style="width:120px">Power</td>
+							<td class="tblContent" style="width:400px"><input type="text" name="eud_power" value="'.$unit_power.'" class="" style="width:400px" /></td>
+						</tr>
+						<tr>
+							<td class="tblHeader" style="width:120px">Type</td>
+							<td class="tblContent"><input type="text" name="eud_type" value="'.$unit_type.'" class="" style="width:400px" /></td>
+						</tr>
+						<tr>
+							<td class="tblHeader" style="width:120px">Company</td>
+							<td class="tblContent"><input type="text" name="eud_company" value="'.$unit_company.'" class="" style="width:400px" /></td>
+						</tr>
+						<tr>
+							<td class="tblHeader" style="width:120px">Model</td>
+							<td class="tblContent"><input type="text" name="eud_model" value="'.$unit_model.'" class="" style="width:400px" /></td>
+						</tr>
+						<tr>
+							<td class="tblHeader" style="width:120px">Description</td>
+							<td class="tblContent"><textarea type="text" name="eud_description" class="" style="width:400px">'.$unit_description.'</textarea></td>
+						</tr>
+						<tr>
+							<td class="tblHeader" style="width:120px">Picture</td>
+							<td class="tblContent"><input type="text" name="eud_picture" value="'.$unit_picture.'" class="" style="width:400px" /></td>
+						</tr>
+						<tr>
+							<td class="tblHeader">&nbsp;</td>
+							<td class="tblContent" style="text-align:right"><input type="submit" value="Edit" class="button" style="width:50px" /></td>
+						</tr>
+					</table>
+				</form>
+			';
+		}
+	}
+	
+	/* LOGBOOK */
 	function getLogbook($type,$unit_id,$username){
 		switch($type){
 			case 'unit':
