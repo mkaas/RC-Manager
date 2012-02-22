@@ -155,7 +155,7 @@
 	function getUnits(){
 		include_once('includes/db.inc.php');
 		print '
-			<p>Vehicles</p>
+			<p><a href="add_unit.php"><img src="pics/add.png" alt="" width="10px" height="10px" /></a> Vehicles</p>
 			<table border="0" cellspacing="0" cellpadding="0" class="tblspace">
 				<tr>
 					<td style="width:120px" class="tblHeader">Power</td>
@@ -271,11 +271,37 @@
 					<table border="0" cellspacing="0" cellpadding="0" class="tblSpace">
 						<tr>
 							<td class="tblHeader" style="width:120px">Power</td>
-							<td class="tblContent" style="width:400px"><input type="text" name="eud_power" value="'.$unit_power.'" class="" style="width:400px" /></td>
+							<td class="tblContent" style="width:400px">
+								<select name="eud_power" class="" style="width:400px">
+									<optgroup label="Current" />
+									<option value="'.$unit_power.'">'.$unit_power.'</option>
+									<optgroup label="Available" />
+									<option value="Electric">Electric</option>
+									<option value="Gas">Gas</option>
+									<option value="Glow">Glow</option>
+								</select>
+							</td>
 						</tr>
 						<tr>
 							<td class="tblHeader" style="width:120px">Type</td>
-							<td class="tblContent"><input type="text" name="eud_type" value="'.$unit_type.'" class="" style="width:400px" /></td>
+							<td class="tblContent">
+								<select type="text" name="eud_type" class="" style="width:400px">
+									<optgroup label="Current" />
+									<option value="'.$unit_type.'">'.$unit_type.'</option>
+									<optgroup label="Available" />
+									<option value="Scale">Scale</option>
+									<option value="EDF">EDF</option>
+									<option value="Warbird">Warbird</option>
+									<option value="Park">Park</option>
+									<option value="Trainer">Trainer</option>
+									<option value="MultiCopter">MultiCopter</option>
+									<option value="Helicopter">Helicopter</option>
+									<option value="Car">Car</option>
+									<option value="Truck">Truck</option>
+									<option value="Motorcycle">Motorcycle</option>
+									<option value="Tank">Tank</option>
+								</select>
+							</td>
 						</tr>
 						<tr>
 							<td class="tblHeader" style="width:120px">Company</td>
@@ -286,8 +312,8 @@
 							<td class="tblContent"><input type="text" name="eud_model" value="'.$unit_model.'" class="" style="width:400px" /></td>
 						</tr>
 						<tr>
-							<td class="tblHeader" style="width:120px">Description</td>
-							<td class="tblContent"><textarea type="text" name="eud_description" class="" style="width:400px">'.$unit_description.'</textarea></td>
+							<td valign="top" class="tblHeader" style="width:120px">Description</td>
+							<td class="tblContent"><textarea rows="15" type="text" name="eud_description" class="" style="width:400px">'.$unit_description.'</textarea></td>
 						</tr>
 						<tr>
 							<td class="tblHeader" style="width:120px">Picture</td>
@@ -301,6 +327,70 @@
 				</form>
 			';
 		}
+	}
+	
+	function frmAddUnit(){
+		$_SESSION['add_todo']='unit';
+		print '
+			<form action="do_add.php" method="POST">
+				<table border="0" cellspacing="0" cellpadding="0" class="tblSpace">
+					<tr>
+						<td class="tblHeader" style="width:120px">Power</td>
+						<td class="tblContent" style="width:400px">
+							<select name="add_power" class="" style="width:400px">
+								<option value="Electric">Electric</option>
+								<option value="Gas">Gas</option>
+								<option value="Glow">Glow</option>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td class="tblHeader" style="width:120px">Type</td>
+						<td class="tblContent">
+							<select type="text" name="add_type" class="" style="width:400px">
+								<option value="Scale">Scale</option>
+								<option value="EDF">EDF</option>
+								<option value="Warbird">Warbird</option>
+								<option value="Park">Park</option>
+								<option value="Trainer">Trainer</option>
+								<option value="MultiCopter">MultiCopter</option>
+								<option value="Helicopter">Helicopter</option>
+								<option value="Car">Car</option>
+								<option value="Truck">Truck</option>
+								<option value="Motorcycle">Motorcycle</option>
+								<option value="Tank">Tank</option>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td class="tblHeader" style="width:120px">Company</td>
+						<td class="tblContent"><input type="text" name="add_company" class="" style="width:400px" /></td>
+					</tr>
+					<tr>
+						<td class="tblHeader" style="width:120px">Model</td>
+						<td class="tblContent"><input type="text" name="add_model" class="" style="width:400px" /></td>
+					</tr>
+					<tr>
+						<td valign="top" class="tblHeader" style="width:120px">Description</td>
+						<td class="tblContent"><textarea rows="15" type="text" name="add_description" class="" style="width:400px"></textarea></td>
+					</tr>
+					<tr>
+						<td class="tblHeader" style="width:120px">Picture</td>
+						<td class="tblContent"><input type="text" name="add_picture" class="" style="width:400px" /></td>
+					</tr>
+					<tr>
+						<td class="tblHeader">&nbsp;</td>
+						<td class="tblContent" style="text-align:right"><input type="submit" value="Add" class="button" style="width:50px" /></td>
+					</tr>
+				</table>
+			</form>
+		';
+	}
+	
+	function addUnit($user,$power,$type,$company,$model,$description,$picture){
+		include_once('includes/db.inc.php');
+		mysql_query("INSERT INTO rc_units (unt_id, unt_user, unt_type, unt_company, unt_model, unt_powered, unt_picture, unt_description, unt_active) VALUES (NULL, '".$user."', '".$type."', '".$company."', '".$model."', '".$power."', '".$picture."', '".$description."', 'true')") or die(mysql_error());
+		chPage('units.php');
 	}
 	
 	/* LOGBOOK */
@@ -432,6 +522,10 @@
 			default:
 				break;
 		}
+	}
+	
+	function addLogLine($unit_id,$username){
+		
 	}
 	
 	/* Transmitter */
