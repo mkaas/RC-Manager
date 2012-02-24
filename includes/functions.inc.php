@@ -176,7 +176,7 @@
 			$unit_description=$arUNT['unt_description'];
 			
 			if($unit_picture==''){
-				$unit_picture='pics/nophoto.png';
+				$unit_picture='nophoto.png';
 			}
 			
 			if(strlen($unit_description) >= 3){
@@ -222,7 +222,7 @@
 			$unit_description=$arUNT['unt_description'];
 			
 			if($unit_picture==''){
-				$unit_picture='pics/nophoto.png';
+				$unit_picture='nophoto.png';
 			}
 			
 			/*if(strlen($unit_description) >= 60){
@@ -532,7 +532,7 @@
 	function getTx(){
 		include_once('includes/db.inc.php');
 		print '
-			<p>Transmitters</p>
+			<p><a href="add_tx.php"><img src="pics/add.png" alt="" width="10px" height="10px" /></a> Transmitters</p>
 			<table border="0" cellspacing="0" cellpadding="0" class="tblspace">
 				<tr>
 					<td style="width:120px" class="tblHeader">Type</td>
@@ -553,7 +553,7 @@
 			$tx_description=$arTX['tx_description'];
 			
 			if($tx_picture==''){
-				$tx_picture='pics/nophoto.png';
+				$tx_picture='nophoto.png';
 			}
 			
 			if(strlen($tx_description) >= 3){
@@ -576,6 +576,114 @@
 	}
 	
 	function getTxDetail($tx_id){
+		include_once('includes/db.inc.php');
+		print '
+			<p>Details</p>
+			<table border="0" cellspacing="0" cellpadding="0" class="tblspace">
+				<tr>
+					<td style="width:270px" class="tblHeader">&nbsp;</td>
+					<td style="width:120px" class="tblHeader">Type</td>
+					<td style="width:120px" class="tblHeader">Company</td>
+					<td style="width:120px" class="tblHeader">Model</td>
+					<td style="width:120px" class="tblHeader">Power</td>
+					<td style="width:320px" class="tblHeader">Description</td>
+				</tr>
+		';
+		$txSQL=mysql_query("SELECT * FROM rc_transmitters WHERE tx_user='".$_SESSION['username']."' AND tx_active='true' AND tx_id='".$tx_id."'") or die(mysql_error());
+		while($arTX=mysql_fetch_array($txSQL)){
+			$tx_id=$arTX['tx_id'];
+			$tx_type=$arTX['tx_type'];
+			$tx_company=$arTX['tx_company'];
+			$tx_model=$arTX['tx_model'];
+			$tx_powered=$arTX['tx_powered'];
+			$tx_picture=$arTX['tx_picture'];
+			$tx_description=$arTX['tx_description'];
+			
+			if($tx_picture==''){
+				$tx_picture='nophoto.png';
+			}
+			
+			/*if(strlen($unit_description) >= 60){
+				$ud = str_split($unit_description, '60');
+				$unit_description = $ud[0] . '<br />' . $ud[1] . '<br />' . $ud[2] . '<br />' . $ud[3] . '<br />' . $ud[4] . '<br />' . $ud[5] . '<br />' . $ud[6] . '<br />' . $ud[7] . '<br />' . $ud[8] . '<br />' . $ud[9] . '<br />' . $ud[10];
+			}*/
+			
+			if(strlen($tx_description) >= 60){
+				$ud = explode(' ', $tx_description);
+				for($i=0;$i<=count($ud);$i++){
+					if($i=10){$ud='<br />';}
+					$tx_description = $tx_description . ' ' . $ud;
+				}
+			}
+			
+			print '
+				<tr>
+					<td class="tblContent"><img src="pics/'.$tx_picture.'" alt="" width="256px" height="256px" /></td>
+					<td class="tblContent">'.$tx_type.'</td>
+					<td class="tblContent">'.$tx_company.'</td>
+					<td class="tblContent">'.$tx_model.'</td>
+					<td class="tblContent">'.$tx_powered.'</td>
+					<td class="tblContent" style="width:320px">'.$tx_description.'</td>
+				</tr>
+			';
+		}
+		print '</table>';
+	}
+	
+	/* BATTERIES */
+	function getBatteries(){
+		include_once('includes/db.inc.php');
+		print '
+			<p><a href="add_battery.php"><img src="pics/add.png" alt="" width="10px" height="10px" /></a> Batteries</p>
+			<table border="0" cellspacing="0" cellpadding="0" class="tblspace">
+				<tr>
+					<td style="width:120px" class="tblHeader">Type</td>
+					<td style="width:120px" class="tblHeader">Company</td>
+					<td style="width:120px" class="tblHeader">Model</td>
+					<td style="width:120px" class="tblHeader">Capacity</td>
+					<td style="width:120px" class="tblHeader">Uses</td>
+					<td style="width:120px" class="tblHeader">Powered</td>
+					<td style="width:320px" class="tblHeader">Description</td>
+				</tr>
+		';
+		$batSQL=mysql_query("SELECT * FROM rc_batteries WHERE bat_user='".$_SESSION['username']."' AND bat_active='true'") or die(mysql_error());
+		while($arBAT=mysql_fetch_array($batSQL)){
+			$bat_id=$arBAT['bat_id'];
+			$bat_type=$arBAT['bat_type'];
+			$bat_company=$arBAT['bat_company'];
+			$bat_model=$arBAT['bat_model'];
+			$bat_capacity=$arBAT['bat_capacity'];
+			$bat_uses=$arBAT['bat_uses'];
+			$bat_powered=$arBAT['bat_powered'];
+			$bat_picture=$arBAT['bat_picture'];
+			$bat_description=$arBAT['bat_description'];
+			
+			if($bat_picture==''){
+				$bat_picture='nophoto.png';
+			}
+			
+			if(strlen($bat_description) >= 3){
+				$ud = str_split($bat_description, '3');
+				$bat_description = $ud[0] . '...';
+			}
+			
+			print '
+				<tr>
+					
+					<td class="tblContent">'.$bat_type.'</td>
+					<td class="tblContent">'.$bat_company.'</td>
+					<td class="tblContent"><form action="bat_detail.php" method="POST"><input type="hidden" name="tx_id" value="'.$bat_id.'" /><input class="input" type="submit" value="'.$bat_model.'" /></form></td>
+					<td class="tblContent">'.$bat_capacity.'</td>
+					<td class="tblContent">'.$bat_uses.'</td>
+					<td class="tblContent">'.$bat_powered.'</td>
+					<td class="tblContent">'.$bat_description.'</td>
+				</tr>
+			';
+		}
+		print '</table>';
+	}
+	
+	function getBatDetail($tx_id){
 		include_once('includes/db.inc.php');
 		print '
 			<p>Details</p>
@@ -629,4 +737,5 @@
 		}
 		print '</table>';
 	}
+	
 ?>

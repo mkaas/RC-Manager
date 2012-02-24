@@ -10,7 +10,9 @@
 	crBanner();
 	crMenu($_SESSION['userlevel']);
 	br('2');
-	getBatteries();
+	getBatDetail($_POST['bat_id']);
+	br(1);
+	getLogbook('battery',$_POST['tx_id'],$_SESSION['username']);
 	
 	htmlFooter();
 ?>

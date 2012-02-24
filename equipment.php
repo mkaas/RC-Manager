@@ -10,7 +10,7 @@
 	crBanner();
 	crMenu($_SESSION['userlevel']);
 	br('2');
-	getBatteries();
+	
 	
 	htmlFooter();
 ?>
